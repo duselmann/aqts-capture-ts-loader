@@ -17,7 +17,7 @@ clean_build:
   script:
     - mvn package -Dmaven.test.skip=true
   artifacts:
-    path:
+    paths:
       - target
   tags:
     - cloudformation-dev
@@ -27,7 +27,7 @@ unit_test:
   script:
     - mvn test
   artifacts:
-    path:
+    paths:
       - target
   tags:
     - cloudformation-dev
