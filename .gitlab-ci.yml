@@ -1,0 +1,31 @@
+image: $CI_REGISTRY/wma/continuous-integration/maven-build-image/maven-3-jdk-11
+
+variables:
+  # Use a maven repository nested in this repo to improve caching
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+
+ stages:
+  - build
+  - test
+  - deploy
+
+clean_build:
+  stage: build
+  script:
+  	- mvn package -Dmaven.test.skip=true
+  artifacts:
+  	path:
+  	  - target
+
+unit_test:
+  stage: test
+  script:
+  	- mvn test
+  artifacts:
+  	path:
+  	  - target
+  
