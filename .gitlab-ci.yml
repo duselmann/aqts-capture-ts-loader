@@ -15,19 +15,21 @@ stages:
 clean_build:
   stage: build
   script:
-    - mvn package -Dmaven.test.skip=true
+    - mvn clean package $MAVEN_CLI_OPTS -Dmaven.test.skip=true
   artifacts:
     paths:
       - target
   tags:
     - cloudformation-dev
 
-unit_test:
+unit_test_and_coverage:
   stage: test
   script:
-    - mvn test
+    - 'mvn org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report $MAVEN_CLI_OPTS'
   artifacts:
     paths:
       - target
+      # - target/surefire-reports
+      # - target/site/jacoco
   tags:
     - cloudformation-dev
